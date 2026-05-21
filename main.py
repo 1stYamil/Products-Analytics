@@ -1,16 +1,18 @@
 from flask import Flask, jsonify
 from src.repository.json_repository import JsonRepository
 from src.services.product_service import ProductService
+from src.services.analytics_service import AnalyticsService
 from src.controllers.product_controller import create_product_blueprint
 
 app = Flask(__name__)
 
-# Instanciar las capas (Inyección de dependencias)
+# Instanciar las capas de datos y servicios
 repository = JsonRepository()
 product_service = ProductService(repository=repository)
+analytics_service = AnalyticsService(repository=repository) # Instancia de Pandas
 
-# Registrar las rutas del controlador en la aplicación Flask
-app.register_blueprint(create_product_blueprint(product_service))
+# Registrar las rutas inyectando ambos servicios
+app.register_blueprint(create_product_blueprint(product_service, analytics_service))
 
 @app.route('/')
 def health_check():
@@ -20,5 +22,4 @@ def health_check():
     }), 200
 
 if __name__ == '__main__':
-    # Ejecuta el servidor en modo desarrollo y en el puerto 5000
     app.run(debug=True, port=5000)

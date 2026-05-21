@@ -1,1 +1,23 @@
-[]
+[
+    {
+        "id": 1,
+        "nombre": "Teclado Mecánico",
+        "descripción": "Teclado RGB con switches red",
+        "precio": 250000,
+        "cantidad": 15
+    },
+    {
+        "id": 2,
+        "nombre": "Mouse Gamer",
+        "descripción": "Mouse ergonómico de 16000 DPI",
+        "precio": 120000,
+        "cantidad": 30
+    },
+    {
+        "id": 3,
+        "nombre": "Monitor 24 pulgadas",
+        "descripción": "Monitor Full HD 144Hz",
+        "precio": 850000,
+        "cantidad": 5
+    }
+]

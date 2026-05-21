@@ -1,15 +1,13 @@
 from flask import Blueprint, request, jsonify
 from src.services.exceptions import ProductNotFoundError, DuplicateProductError
 
-def create_product_blueprint(product_service):
-    # El Blueprint agrupa las rutas bajo el prefijo /api/productos
+def create_product_blueprint(product_service, analytics_service):
     bp = Blueprint('products', __name__, url_prefix='/api/productos')
 
     @bp.route('', methods=['POST'])
     def create():
         try:
             data = request.get_json()
-            # Validar campos mínimos requeridos
             required = ['id', 'nombre', 'descripción', 'precio', 'cantidad']
             if not all(k in data for k in required):
                 return jsonify({"error": "Faltan campos requeridos en el producto"}), 400
@@ -47,5 +45,11 @@ def create_product_blueprint(product_service):
             return jsonify({"message": f"Producto {product_id} eliminado exitosamente"}), 200
         except ProductNotFoundError as e:
             return jsonify({"error": str(e)}), 404
+
+    # --- NUEVA RUTA ANALÍTICA CON PANDAS ---
+    @bp.route('/estadisticas', methods=['GET'])
+    def get_analytics():
+        report = analytics_service.generate_inventory_report()
+        return jsonify(report), 200
 
     return bp
