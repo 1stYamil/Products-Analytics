@@ -1,10 +1,10 @@
 [
     {
-        "id": 1,
         "nombre": "Essence Mascara Lash Princess",
         "descripción": "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
-        "precio": 39960.0,
-        "cantidad": 12
+        "precio": 39960,
+        "cantidad": 16,
+        "id": 1
     },
     {
         "id": 2,
@@ -182,11 +182,11 @@
         "cantidad": 7
     },
     {
-        "id": 27,
         "nombre": "Honey Jar",
         "descripción": "Pure and natural honey in a convenient jar, perfect for sweetening beverages or drizzling over food.",
-        "precio": 27960.0,
-        "cantidad": 14
+        "precio": 27960,
+        "cantidad": 51,
+        "id": 27
     },
     {
         "id": 28,
@@ -698,5 +698,12 @@
         "descripción": "The Apple Airpods offer a seamless wireless audio experience. With easy pairing, high-quality sound, and Siri integration, they are perfect for on-the-go listening.",
         "precio": 519960.00000000006,
         "cantidad": 30
+    },
+    {
+        "nombre": "Jean Paul Galtier Le Bau",
+        "descripción": "JPG Le bau is a floral fragance, made for especials and confidents persons",
+        "precio": 500000,
+        "cantidad": 45,
+        "id": 101
     }
 ]
