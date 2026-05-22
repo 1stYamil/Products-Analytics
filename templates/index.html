@@ -96,20 +96,25 @@
 
             <div class="col-md-8">
                 <div class="card p-4 h-100">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3 gap-2">
                         <h5 class="mb-0">Inventario Registrado</h5>
-                        <button class="btn btn-sm btn-outline-secondary" onclick="loadAllData()">🔄 Recargar Todo</button>
+                        
+                        <div class="d-flex gap-2">
+                            <input type="text" id="tableSearch" class="form-control form-control-sm" placeholder="🔍 Filtrar por nombre o ID...">
+                            <button class="btn btn-sm btn-outline-primary" onclick="searchByIdPrompt()">🎯 Buscar ID</button>
+                            <button class="btn btn-sm btn-outline-secondary" onclick="loadAllData()">🔄 Recargar</button>
+                        </div>
                     </div>
                     
                     <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
-                        <table class="table table-hover align-middle">
+                        <table class="table table-hover align-middle" id="productsTable">
                             <thead class="table-dark sticky-top">
                                 <tr>
                                     <th>ID</th>
                                     <th>Nombre</th>
                                     <th>Precio</th>
                                     <th>Stock</th>
-                                    <th class="text-center">Acción</th>
+                                    <th class="text-center">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody id="productsTableBody">
@@ -122,6 +127,62 @@
         </div>
     </div>
 
+    <div class="modal fade" id="editModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-content modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4" style="border-radius: 12px; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="modal-title" id="editModalLabel">✏️ Editar Datos del Producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeEditModalBtn"></button>
+                </div>
+                <form id="editProductForm">
+                    <div class="mb-2">
+                        <label class="form-label small text-muted">ID del Producto (No modificable)</label>
+                        <input type="number" id="edit-form-id" class="form-control bg-light" readonly>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label small">Nombre del Producto</label>
+                        <input type="text" id="edit-form-nombre" class="form-control" required>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label small">Descripción</label>
+                        <textarea id="edit-form-descripcion" class="form-control" rows="2" required></textarea>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label class="form-label small">Precio ($)</label>
+                            <input type="number" id="edit-form-precio" class="form-control" required>
+                        </div>
+                        <div class="col">
+                            <label class="form-label small">Cantidad</label>
+                            <input type="number" id="edit-form-cantidad" class="form-control" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">🔄 Actualizar Cambios</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+        <div class="modal-content modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4 text-center" style="border-radius: 12px; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                <div class="d-flex justify-content-between align-items-center mb-3 w-100">
+                    <h5 class="modal-title text-primary" id="viewModalLabel">🔍 Ficha Técnica del Producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="card bg-light p-3 my-2 text-start">
+                    <p class="mb-1"><strong>ID Sistema:</strong> <span id="view-id"></span></p>
+                    <p class="mb-1"><strong>Nombre:</strong> <span id="view-nombre"></span></p>
+                    <p class="mb-1"><strong>Descripción:</strong> <span class="text-muted" id="view-descripcion"></span></p>
+                    <p class="mb-1"><strong>Precio Unitario:</strong> <span class="text-success fw-bold" id="view-precio"></span></p>
+                    <p class="mb-1"><strong>Existencias actuales:</strong> <span class="badge bg-dark" id="view-cantidad"></span></p>
+                </div>
+                <button type="button" class="btn btn-secondary w-100 mt-2" data-bs-dismiss="modal">Cerrar Detalle</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/static/js/app.js"></script>
 </body>
