@@ -14,7 +14,7 @@ analytics_service = AnalyticsService(repository=repository)
 # Registrar las rutas inyectando ambos servicios
 app.register_blueprint(create_product_blueprint(product_service, analytics_service))
 
-# Cambiamos la ruta principal para que renderice la vista web interactiva
+# Ruta principal para que renderice la vista web interactiva
 @app.route('/')
 def home():
     return render_template('index.html')  # <-- Devuelve la plantilla HTML

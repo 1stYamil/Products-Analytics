@@ -700,10 +700,10 @@
         "cantidad": 30
     },
     {
-        "nombre": "Jean Paul Galtier Le Bau",
-        "descripción": "JPG Le bau is a floral fragance, made for especials and confidents persons",
-        "precio": 500000,
-        "cantidad": 45,
-        "id": 101
+        "id": 102,
+        "nombre": "Asics Gel NYC",
+        "descripción": "Tenis con estética deportiva de la marca Asics, perfectos para caminar con comodidad",
+        "precio": 180000,
+        "cantidad": 15
     }
 ]

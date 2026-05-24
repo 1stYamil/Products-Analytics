@@ -64,7 +64,7 @@ async function loadTableAndChart() {
         
         const formatter = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 });
 
-        // --- RENDERIZAR TABLA INTERACTIVA (AQUÍ INTEGRAMOS EL LÁPIZ DE EDICIÓN) ---
+        // --- RENDERIZAR TABLA INTERACTIVA ---
         products.forEach(p => {
             const row = document.createElement("tr");
             row.classList.add("product-row"); // Clase para el filtro en tiempo real
@@ -177,7 +177,7 @@ async function openEditModal(id) {
         document.getElementById("edit-form-precio").value = p.precio;
         document.getElementById("edit-form-cantidad").value = p.cantidad;
 
-        // Abrir la ventana modal programáticamente
+        // Abrir la ventana modal de edición
         editModal.show();
     } catch (err) {
         alert(`❌ Error al precargar datos para editar: ${err.message}`);
@@ -257,9 +257,9 @@ async function openViewModal(id) {
     }
 }
 
-// --- CAPA 4: DELETE (PAPELERA RED) ---
+// --- CAPA 4: DELETE (PAPELERA) ---
 async function deleteProduct(id) {
-    // Confirmación de seguridad nativa
+    // Confirmación de seguridad 
     if (!confirm(`⚠️ ¿Estás seguro de que deseas eliminar permanentemente el producto #${id}?`)) return;
 
     try {
@@ -277,7 +277,7 @@ async function deleteProduct(id) {
 
 // --- CAPA 5: UTILIDADES Y FILTRO EN TIEMPO REAL ---
 
-// Solución al scroll tedioso: Filtra la tabla al instante al escribir en el buscador
+// Solución al scroll: Filtra la tabla al instante al escribir en el buscador
 function filterTableInRealTime() {
     const searchString = document.getElementById("tableSearch").value.toLowerCase();
     const rows = document.querySelectorAll("#productsTableBody tr.product-row");
