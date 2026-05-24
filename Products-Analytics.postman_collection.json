@@ -1,0 +1,43 @@
+{
+  "info": {
+    "_postman_id": "c587cc84-9e11-492e-80ee-59aecd099243",
+    "name": "Products-Analytics",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "49789842",
+    "_collection_link": "https://go.postman.co/collection/49789842-c587cc84-9e11-492e-80ee-59aecd099243?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Get",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "Estadisticas",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "Crear",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "Borrar",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    }
+  ]
+}
