@@ -5,9 +5,12 @@ class AnalyticsService:
     def __init__(self, repository: JsonRepository):
         self.repository = repository
 
-    def generate_inventory_report(self) -> dict:
-        """Usa Pandas para procesar el JSON y generar métricas del inventario."""
+def generate_inventory_report(self) -> dict:
+    try:
         products = self.repository.read_all()
+    except Exception as e:   #Exepción para evitar que el sistema colapse por algún error con el Json
+        print(f"Error accediendo al repositorio: {e}")
+        return {"error": "No se pudo recuperar la informacion del inventario"}
         
         # Si no hay productos, devolvemos un reporte vacío controlado
         if not products:
