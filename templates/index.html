@@ -4,68 +4,200 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products Analytics - Dashboard Ejecutivo</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <style>
-        body { background-color: #f8f9fa; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .card { border: none; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-radius: 10px; }
-        .stats-title { font-size: 0.9rem; color: #6c757d; font-weight: 600; text-transform: uppercase; }
-        .stats-number { font-size: 1.8rem; font-weight: 700; color: #212529; }
+        body {
+            background: #f5f7fb;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #212529;
+        }
+
+        .navbar {
+            margin-bottom: 1.5rem;
+        }
+
+        .card {
+            border: none;
+            border-radius: 18px;
+            box-shadow: 0 10px 25px rgba(0,0,0,.08);
+            transition: .25s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        .stat-card {
+            color: #fff;
+            min-height: 160px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .stat-card i {
+            opacity: .95;
+        }
+
+        .stats-title {
+            font-size: .85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            opacity: .95;
+            margin-bottom: .35rem;
+        }
+
+        .stats-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .bg-products {
+            background: linear-gradient(135deg, #4361ee, #3a0ca3);
+        }
+
+        .bg-inventory {
+            background: linear-gradient(135deg, #2ec4b6, #06d6a0);
+        }
+
+        .bg-average {
+            background: linear-gradient(135deg, #4895ef, #4cc9f0);
+        }
+
+        .bg-stock {
+            background: linear-gradient(135deg, #f77f00, #fcbf49);
+        }
+
+        .section-title {
+            font-weight: 800;
+            color: #334155;
+        }
+
+        .table tbody tr {
+            transition: .2s ease;
+        }
+
+        .table tbody tr:hover {
+            background: #eef3ff;
+        }
+
+        .table thead th {
+            font-weight: 700;
+            letter-spacing: .3px;
+        }
+
+        .table-responsive {
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .search-tools .form-control {
+            min-width: 220px;
+        }
+
+        .modal-content {
+            border-radius: 16px;
+            border: none;
+            box-shadow: 0 20px 45px rgba(0,0,0,.18);
+        }
+
+        .badge-soft {
+            background: rgba(255,255,255,.18);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,.15);
+        }
+
+        .chart-card {
+            overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+            .stats-number {
+                font-size: 1.45rem;
+            }
+
+            .search-tools {
+                width: 100%;
+            }
+
+            .search-tools .form-control {
+                min-width: 0;
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-dark bg-dark mb-4">
-        <div class="container">
-            <span class="navbar-brand mb-0 h1">📊 Products-Analytics</span>
-            <span class="badge bg-success">Sistema de Control Operacional</span>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+        <div class="container py-1">
+            <span class="navbar-brand mb-0 h1 fw-bold">
+                <i class="bi bi-graph-up-arrow me-2"></i>Products Analytics
+            </span>
+            <span class="badge badge-soft px-3 py-2">Sistema de Control Operacional</span>
         </div>
     </nav>
 
-    <div class="container mb-5">
-        
-        <h3 class="mb-3 text-secondary">Dashboard Ejecutivo (Pandas Real-Time)</h3>
+    <div class="container pb-5">
+
+        <div class="mb-4">
+            <h3 class="section-title mb-1">Dashboard Ejecutivo</h3>
+            <p class="text-muted mb-0">Métricas en tiempo real, visualización del inventario y gestión CRUD.</p>
+        </div>
+
         <div class="row g-3 mb-4">
             <div class="col-md-3">
-                <div class="card p-3 bg-white text-center">
+                <div class="card stat-card bg-products p-4 text-center">
+                    <i class="bi bi-box-seam fs-1 mb-2"></i>
                     <div class="stats-title">Productos Únicos</div>
                     <div class="stats-number" id="stat-unicos">-</div>
                 </div>
             </div>
+
             <div class="col-md-3">
-                <div class="card p-3 bg-white text-center">
-                    <div class="stats-title">Valor del Inventario</div>
-                    <div class="stats-number text-success" id="stat-valor">-</div>
+                <div class="card stat-card bg-inventory p-4 text-center">
+                    <i class="bi bi-cash-stack fs-1 mb-2"></i>
+                    <div class="stats-title">Valor Inventario</div>
+                    <div class="stats-number" id="stat-valor">-</div>
                 </div>
             </div>
+
             <div class="col-md-3">
-                <div class="card p-3 bg-white text-center">
+                <div class="card stat-card bg-average p-4 text-center">
+                    <i class="bi bi-graph-up-arrow fs-1 mb-2"></i>
                     <div class="stats-title">Precio Promedio</div>
-                    <div class="stats-number text-primary" id="stat-promedio">-</div>
+                    <div class="stats-number" id="stat-promedio">-</div>
                 </div>
             </div>
+
             <div class="col-md-3">
-                <div class="card p-3 bg-white text-center">
+                <div class="card stat-card bg-stock p-4 text-center">
+                    <i class="bi bi-boxes fs-1 mb-2"></i>
                     <div class="stats-title">Mayor Stock</div>
-                    <div class="stats-number text-warning" id="stat-stock" style="font-size: 1.2rem; padding-top: 10px;">-</div>
+                    <div class="stats-number" id="stat-stock">-</div>
                 </div>
             </div>
         </div>
 
-        <div class="row mb-5">
-            <div class="col-md-8 mx-auto">
-                <div class="card p-4">
-                    <h5 class="card-title text-center text-muted mb-3">Top 5 Productos Más Caros en Sistema</h5>
+        <div class="row mb-4">
+            <div class="col-lg-8 mx-auto">
+                <div class="card chart-card p-4">
+                    <h5 class="card-title text-center mb-3 fw-bold">📈 Top 5 Productos Más Caros</h5>
                     <canvas id="analyticsChart" height="100"></canvas>
                 </div>
             </div>
         </div>
 
-        <h3 class="mb-3 text-secondary">Módulo Operativo (CRUD)</h3>
+        <h3 class="section-title mb-3">⚙️ Gestión de Inventario</h3>
+
         <div class="row g-4">
-            
             <div class="col-md-4">
                 <div class="card p-4 h-100">
-                    <h5 class="mb-3">Agregar Nuevo Producto</h5>
+                    <h5 class="mb-3 fw-bold">Agregar Nuevo Producto</h5>
                     <form id="productForm">
                         <div class="mb-2">
                             <label class="form-label small">ID Único</label>
@@ -89,25 +221,31 @@
                                 <input type="number" id="form-cantidad" class="form-control" required>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-dark w-100"> Guardar Producto</button>
+                        <button type="submit" class="btn btn-dark w-100">
+                            <i class="bi bi-plus-circle me-1"></i> Guardar Producto
+                        </button>
                     </form>
                 </div>
             </div>
 
             <div class="col-md-8">
                 <div class="card p-4 h-100">
-                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3 gap-2">
-                        <h5 class="mb-0">Inventario Registrado</h5>
-                        
-                        <div class="d-flex gap-2">
+                    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center mb-3 gap-2">
+                        <h5 class="mb-0 fw-bold">Inventario Registrado</h5>
+
+                        <div class="d-flex flex-column flex-sm-row gap-2 search-tools">
                             <input type="text" id="tableSearch" class="form-control form-control-sm" placeholder="🔍 Filtrar por nombre o ID...">
-                            <button class="btn btn-sm btn-outline-primary" onclick="searchByIdPrompt()"> Buscar ID</button>
-                            <button class="btn btn-sm btn-outline-secondary" onclick="loadAllData()"> Recargar</button>
+                            <button class="btn btn-sm btn-outline-primary" onclick="searchByIdPrompt()">
+                                <i class="bi bi-search me-1"></i> Buscar ID
+                            </button>
+                            <button class="btn btn-sm btn-outline-secondary" onclick="loadAllData()">
+                                <i class="bi bi-arrow-clockwise me-1"></i> Recargar
+                            </button>
                         </div>
                     </div>
-                    
-                    <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
-                        <table class="table table-hover align-middle" id="productsTable">
+
+                    <div class="table-responsive" style="max-height: 420px; overflow-y: auto;">
+                        <table class="table table-hover align-middle mb-0" id="productsTable">
                             <thead class="table-dark sticky-top">
                                 <tr>
                                     <th>ID</th>
@@ -117,23 +255,22 @@
                                     <th class="text-center">Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody id="productsTableBody">
-                                </tbody>
+                            <tbody id="productsTableBody"></tbody>
                         </table>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
     <div class="modal fade" id="editModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-content modal-dialog modal-dialog-centered">
-            <div class="modal-content p-4" style="border-radius: 12px; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="modal-title" id="editModalLabel">✏️ Editar Datos del Producto</h5>
+                    <h5 class="modal-title fw-bold" id="editModalLabel">✏️ Editar Datos del Producto</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeEditModalBtn"></button>
                 </div>
+
                 <form id="editProductForm">
                     <div class="mb-2">
                         <label class="form-label small text-muted">ID del Producto (No modificable)</label>
@@ -157,27 +294,33 @@
                             <input type="number" id="edit-form-cantidad" class="form-control" required>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-success w-100"> Actualizar Cambios</button>
+                    <button type="submit" class="btn btn-success w-100">
+                        <i class="bi bi-check2-circle me-1"></i> Actualizar Cambios
+                    </button>
                 </form>
             </div>
         </div>
     </div>
 
     <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
-        <div class="modal-content modal-dialog modal-dialog-centered">
-            <div class="modal-content p-4 text-center" style="border-radius: 12px; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4 text-center">
                 <div class="d-flex justify-content-between align-items-center mb-3 w-100">
-                    <h5 class="modal-title text-primary" id="viewModalLabel">🔍 Ficha Técnica del Producto</h5>
+                    <h5 class="modal-title text-primary fw-bold" id="viewModalLabel">🔍 Ficha Técnica del Producto</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="card bg-light p-3 my-2 text-start">
+
+                <div class="card bg-light p-3 my-2 text-start shadow-none">
                     <p class="mb-1"><strong>ID Sistema:</strong> <span id="view-id"></span></p>
                     <p class="mb-1"><strong>Nombre:</strong> <span id="view-nombre"></span></p>
                     <p class="mb-1"><strong>Descripción:</strong> <span class="text-muted" id="view-descripcion"></span></p>
                     <p class="mb-1"><strong>Precio Unitario:</strong> <span class="text-success fw-bold" id="view-precio"></span></p>
                     <p class="mb-1"><strong>Existencias actuales:</strong> <span class="badge bg-dark" id="view-cantidad"></span></p>
                 </div>
-                <button type="button" class="btn btn-secondary w-100 mt-2" data-bs-dismiss="modal">Cerrar Detalle</button>
+
+                <button type="button" class="btn btn-secondary w-100 mt-2" data-bs-dismiss="modal">
+                    Cerrar Detalle
+                </button>
             </div>
         </div>
     </div>
